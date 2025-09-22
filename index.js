@@ -15,7 +15,7 @@ app.use(morgan("dev"));
 app.use(userRoutes);
 
 app.get('/', (req, res) => {
-  res.send('Hello World')
+  res.send('Hello Worerld')
 })
 /*
 app.get('/about', (req, res) => {
