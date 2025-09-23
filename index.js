@@ -1,8 +1,13 @@
 import express from "express";
 import 'dotenv/config'
-
-
+/*{
+    "nombre" : "usuario10",
+    "password" : "UserPass!10"
+}
+*/
+//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsIm5vbWJyZSI6InVzdWFyaW8xMCIsImlhdCI6MTc1ODYzNzE4OCwiZXhwIjoxNzU4NjQwNzg4fQ.4Q_oymHKZvZHMIQrz6SEvRxEu8iaLqexMp2Fcwam5sY
 import userRoutes from './Routes/userRoutes.js'
+import cancionRoutes from './Routes/cancionRoutes.js'
 import morgan from "morgan";
 
 const app = express()
@@ -13,13 +18,14 @@ app.use(express.json());
 app.use(morgan("dev"));
 
 app.use(userRoutes);
+app.use(cancionRoutes);
 
 app.get('/', (req, res) => {
   res.send('Hello Worerld')
 })
 /*
 app.get('/about', (req, res) => {
-  res.send('About route 🎉 ')
+  res.send('About route 🎉')
 })
 
 app.get('/canciones', async (req, res) => {

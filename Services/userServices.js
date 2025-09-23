@@ -8,7 +8,7 @@ export async function getUsers() {
     const client = new Client(config);
     await client.connect();
 
-    const result = await client.query('SELECT * FROM usuario')
+    const result = await client.query('SELECT * FROM usuarios')
     await client.end();
     
     return result.rows;
@@ -17,7 +17,7 @@ export async function getUsers() {
 export async function getUserById(id) {
     const client = new Client(config);
     await client.connect();
-    const result = await client.query('SELECT * FROM usuario WHERE id = $1', [id])
+    const result = await client.query('SELECT * FROM usuarios WHERE id = $1', [id])
     await client.end();
 
 
@@ -28,7 +28,7 @@ export async function createuser(user) {
     const client = new Client(config);
     await client.connect();
 
-    const result = await client.query('INSERT INTO usuario (nombre, password) VALUES ($1, $2) RETURNING *', [user.nombre, user.password])
+    const result = await client.query('INSERT INTO usuarios (nombre, password, rol) VALUES ($1, $2, $3) RETURNING *', [user.nombre, user.password, 'usuario'])
     return result.rows[0];
 }
 

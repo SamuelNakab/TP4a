@@ -51,7 +51,7 @@ export const loginUser = async (req, res) => {
             
             
             if (passwordMatch) {
-                const payload = { id: userMatch.id, nombre: userMatch.nombre };
+                const payload = { id: userMatch.id, nombre: userMatch.nombre, rol: userMatch.rol };
                 const options = { expiresIn: '1h' };
                 const token = jwt.sign(payload, process.env.SECRET_KEY, options);
 
