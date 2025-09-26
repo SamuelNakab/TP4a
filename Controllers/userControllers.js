@@ -7,12 +7,14 @@ import { getUsers, getUserById, createuser, getEscuchasByUser } from '../Service
 export const createUser = async (req,res) => {
     try {
         const user = req.body;
-        console.log(user);
+        //console.log(user);
         
         if (!user.nombre || !user.password) {
             return res.status(400).json({ message: 'Debe completar todos los campos' });
         }
         const users = await getUsers();
+        console.log(users);
+        
         const userExists = users.find(u => u.nombre === user.nombre);
 
         if (userExists) {

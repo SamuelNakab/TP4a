@@ -1,0 +1,58 @@
+### Crear usuario
+POST http://localhost:8000/crearusuario
+Content-Type: application/json
+
+{
+  "nombre": "usuario1",
+  "password": "Pass1234!"
+}
+
+### Login (obtiene el token JWT)
+POST http://localhost:8000/login
+Content-Type: application/json
+
+{
+  "nombre": "usuario1",
+  "password": "Pass1234!"
+}
+
+### Escucho (requiere token)
+GET http://localhost:8000/escucho
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibm9tYnJlIjoidXN1YXJpbzEiLCJyb2wiOiJhZG1pbiIsImlhdCI6MTc1ODg5Njc0MSwiZXhwIjoxNzU4OTAwMzQxfQ.eFZspxnG8U7i3we-HdT8b_aoo1s3dXF-PcG4w1A2tqA
+
+### Crear canción (solo admin)
+POST http://localhost:8000/cancion
+Content-Type: application/json
+Authorization: Bearer 
+
+{
+  "nombre": "Canción de prueba"
+}
+
+### Actualizar canción (solo admin)
+PUT http://localhost:8000/cancion
+Content-Type: application/json
+Authorization: Bearer 
+
+{
+  "id": 1,
+  "nombre": "Canción modificada"
+}
+
+### Eliminar canción (solo admin)
+DELETE http://localhost:8000/cancion
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibm9tYnJlIjoidXN1YXJpbzEiLCJyb2wiOiJhZG1pbiIsImlhdCI6MTc1ODg5Njc0MSwiZXhwIjoxNzU4OTAwMzQxfQ.eFZspxnG8U7i3we-HdT8b_aoo1s3dXF-PcG4w1A2tqA
+
+{
+  "id": 1
+}
+
+### Registrar escucha de una canción
+POST http://localhost:8000/escucho
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibm9tYnJlIjoidXN1YXJpbzEiLCJyb2wiOiJhZG1pbiIsImlhdCI6MTc1ODg5Njc0MSwiZXhwIjoxNzU4OTAwMzQxfQ.eFZspxnG8U7i3we-HdT8b_aoo1s3dXF-PcG4w1A2tqA
+
+{
+  "cancion_id": 3
+}
