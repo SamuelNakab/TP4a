@@ -2,8 +2,9 @@
 // export POSTGRES_USER=default
 // export POSTGRES_PASSWORD=xxxxx
 // 
+import { Sequelize } from "sequelize"
 
-
+export const sequelize = new Sequelize(process.env.DATABASE_URL, {dialect : "postgres"})
 export const config = {
     host :process.env.PGHOST,
     database:process.env.PGDATABASE,
