@@ -9,6 +9,11 @@ import 'dotenv/config'
 import userRoutes from './Routes/userRoutes.js'
 import cancionRoutes from './Routes/cancionRoutes.js'
 import morgan from "morgan";
+import { Sequelize } from "sequelize";
+import sequelize from "./dbconfig.js";
+import { Usuario } from "./models/usuarioModel.js";
+import { Cancion } from "./models/cancionModel.js";
+import { Escucha } from "./models/escuchaModel.js";
 
 const app = express()
 const PORT = 8000
@@ -20,8 +25,23 @@ app.use(morgan("dev"));
 app.use(userRoutes);
 app.use(cancionRoutes);
 
+Usuario.hasMany(Escucha, { foreignKey: 'usuarioId' });
+Escucha.belongsTo(Usuario, { foreignKey: 'usuarioId' });
+
+Cancion.hasMany(Escucha, { foreignKey: 'cancionId' });
+Escucha.belongsTo(Cancion, { foreignKey: 'cancionId' });
+
+sequelize.sync({ alter: true })
+  .then(() => {
+        console.log("Tablas creadas");
+    }
+  ).catch((err) => {
+        console.error("Error al crear las tablas:", err);
+    }
+  )
+
 app.get('/', (req, res) => {
-  res.send('Hello Worerld')
+  res.send('Hello World')
 })
 /*
 app.get('/about', (req, res) => {

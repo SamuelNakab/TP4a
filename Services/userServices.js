@@ -1,43 +1,50 @@
 import pkg from 'pg';
 import { config } from '../dbconfig.js';
-
+import { Usuario } from '../models/usuarioModel.js';
+import { Escucha } from '../models/escuchaModel.js';
 const { Client } = pkg
 
 
 export async function getUsers() {
-    const client = new Client(config);
-    await client.connect();
-
-    const result = await client.query('SELECT * FROM usuarios')
-    await client.end();
-    
-    return result.rows;
+    return await Usuario.findAll();
 }
 
+
 export async function getUserById(id) {
-    const client = new Client(config);
-    await client.connect();
-    const result = await client.query('SELECT * FROM usuarios WHERE id = $1', [id])
-    await client.end();
-
-
-    return result.rows[0];
+    return await Usuario.findByPk(id);
 }
 
 export async function createuser(user) {
-    const client = new Client(config);
-    await client.connect();
-
-    const result = await client.query('INSERT INTO usuarios (nombre, password, rol) VALUES ($1, $2, $3) RETURNING *', [user.nombre, user.password, 'usuario'])
-    return result.rows[0];
+    return await Usuario.create({ nombre: user.nombre, password: user.password, rol: 'usuario' });
 }
 
 
 export async function getEscuchasByUser(user) {
-    const client = new Client(config);
-    await client.connect();
+  const escuchas = await Escucha.findAll({
+    where: { usuario_id: user.id },
+    attributes: ["cancion_id"],
+    raw: true
+  });
 
-    const result = await client.query('SELECT c.id AS cancion_id, c.nombre AS cancion, SUM(e.reproducciones) AS total_reproducciones FROM escucha e JOIN cancion c ON e.cancion_id = c.id WHERE e.usuario_id = $1 GROUP BY c.id, c.nombre ORDER BY total_reproducciones DESC;', [user.id])
-    return result.rows;
+  const resultado = [];
+
+  for (let i = 0; i < escuchas.length; i++) {
+    const cancionId = escuchas[i].cancion_id;
+
+    let encontrada = false;
+    for (let j = 0; j < resultado.length; j++) {
+      if (resultado[j].cancion_id === cancionId) {
+        resultado[j].reproducciones += 1;
+        encontrada = true;
+        break;
+      }
+    }
+
+    if (!encontrada) {
+      resultado.push({ cancion_id: cancionId, reproducciones: 1 });
+    }
+  }
+
+  return resultado;
 }
 
