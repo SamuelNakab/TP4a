@@ -28,10 +28,10 @@ export async function deleteCancion(id) {
     return row;
 }
 
-export async function escuchar(usuario_id, cancion_id) {
+export async function escuchar(usuarioId, cancionId) {
     lisen = await Escucha.create({
-        usuarioId: usuario_id,
-        cancionId: cancion_id,
+        usuarioId: usuarioId,
+        cancionId: cancionId,
         fechaEscucha: new Date()
     });
     return lisen;

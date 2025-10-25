@@ -10,7 +10,7 @@ import userRoutes from './Routes/userRoutes.js'
 import cancionRoutes from './Routes/cancionRoutes.js'
 import morgan from "morgan";
 import { Sequelize } from "sequelize";
-import sequelize from "./dbconfig.js";
+import { sequelize } from "./dbconfig.js";
 import { Usuario } from "./models/usuarioModel.js";
 import { Cancion } from "./models/cancionModel.js";
 import { Escucha } from "./models/escuchaModel.js";
@@ -31,7 +31,7 @@ Escucha.belongsTo(Usuario, { foreignKey: 'usuarioId' });
 Cancion.hasMany(Escucha, { foreignKey: 'cancionId' });
 Escucha.belongsTo(Cancion, { foreignKey: 'cancionId' });
 
-sequelize.sync({ alter: true })
+sequelize.sync({ force : true })
   .then(() => {
         console.log("Tablas creadas");
     }

@@ -21,19 +21,19 @@ export async function createuser(user) {
 
 export async function getEscuchasByUser(user) {
   const escuchas = await Escucha.findAll({
-    where: { usuario_id: user.id },
-    attributes: ["cancion_id"],
+    where: { usuarioId : user.id },
+    attributes: ["cancionId"],
     raw: true
   });
 
   const resultado = [];
 
   for (let i = 0; i < escuchas.length; i++) {
-    const cancionId = escuchas[i].cancion_id;
+    const cancionId = escuchas[i].cancionID;
 
     let encontrada = false;
     for (let j = 0; j < resultado.length; j++) {
-      if (resultado[j].cancion_id === cancionId) {
+      if (resultado[j].cancionID === cancionId) {
         resultado[j].reproducciones += 1;
         encontrada = true;
         break;
@@ -41,7 +41,7 @@ export async function getEscuchasByUser(user) {
     }
 
     if (!encontrada) {
-      resultado.push({ cancion_id: cancionId, reproducciones: 1 });
+      resultado.push({ cancionID : cancionId, reproducciones: 1 });
     }
   }
 

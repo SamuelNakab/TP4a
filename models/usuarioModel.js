@@ -1,9 +1,9 @@
 import { DataTypes, Model } from "sequelize";
-import sequelize from "../dbconfig.js";
+import { sequelize } from "../dbconfig.js";
 
 export class Usuario extends Model {}
 
-Usuarios.init(
+Usuario.init(
     {
         id : {
             type : DataTypes.INTEGER,

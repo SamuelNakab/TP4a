@@ -48,15 +48,15 @@ export const deleteSong = async (req,res) => {
 export const escucharCancion = async (req,res) => {
     console.log(req.body);
     
-    const {cancion_id} = req.body
-    const usuario_id = req.user.id
+    const {cancionId} = req.body
+    const usuarioId = req.user.id
     
     
     try {
-        if (!usuario_id || !cancion_id) {
+        if (!usuarioId || !cancionId) {
             return res.status(400).send('Debe completar todos los campos');
         }
-        const escucha = await escuchar(usuario_id, cancion_id);
+        const escucha = await escuchar(usuarioId, cancionId);
         return res.status(201).json({ escucha });
 
     } catch (error) {
