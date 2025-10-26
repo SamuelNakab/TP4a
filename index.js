@@ -31,7 +31,7 @@ Escucha.belongsTo(Usuario, { foreignKey: 'usuarioId' });
 Cancion.hasMany(Escucha, { foreignKey: 'cancionId' });
 Escucha.belongsTo(Cancion, { foreignKey: 'cancionId' });
 
-sequelize.sync({ force : true })
+sequelize.sync({ alter: true })
   .then(() => {
         console.log("Tablas creadas");
     }
@@ -39,6 +39,8 @@ sequelize.sync({ force : true })
         console.error("Error al crear las tablas:", err);
     }
   )
+
+
 
 app.get('/', (req, res) => {
   res.send('Hello World')
@@ -106,6 +108,31 @@ app.post('/login', async (req,res) =>{
     }
 })
 */
+
+
+
+
+async function testConnection() {
+  try {
+    await sequelize.authenticate();
+    console.log('Conectado a la DB correctamente');
+
+    // Listar tablas visibles
+    const [results] = await sequelize.query(`
+      SELECT table_name
+      FROM information_schema.tables
+      WHERE table_schema = 'public';
+    `);
+    console.log('Tablas visibles:', results.map(r => r.table_name));
+  } catch (error) {
+    console.error('Error al conectar o listar tablas:', error);
+  }
+}
+
+testConnection();
+
+
+
 app.listen(PORT, () => {
   console.log(`✅ Server is running on port ${PORT}`);
 })

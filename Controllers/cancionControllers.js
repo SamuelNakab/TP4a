@@ -48,7 +48,7 @@ export const deleteSong = async (req,res) => {
 export const escucharCancion = async (req,res) => {
     console.log(req.body);
     
-    const {cancionId} = req.body
+    const { cancionId } = req.body
     const usuarioId = req.user.id
     
     

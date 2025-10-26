@@ -29,11 +29,13 @@ export async function deleteCancion(id) {
 }
 
 export async function escuchar(usuarioId, cancionId) {
-    lisen = await Escucha.create({
+    const listen = await Escucha.create({
         usuarioId: usuarioId,
         cancionId: cancionId,
-        fechaEscucha: new Date()
+        fechaEscucha: new Date(),
+        createdAt: new Date(),
+        updatedAt: new Date()
     });
-    return lisen;
+    return listen;
 }
 

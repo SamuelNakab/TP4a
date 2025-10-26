@@ -25,6 +25,7 @@ Escucha.init(
     {
     sequelize,
     modelName : 'escucha',
-    tableName : 'escuchas'
+    tableName : 'escuchas',
+    schema: 'public'
 }
 )
